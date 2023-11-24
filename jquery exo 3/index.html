@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rechercher un film method getJSON</title>
+    <link rel="stylesheet" href="asset/css/style.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <h1>Recherche de film</h1>
+
+    <div class="input-group mb-3">
+
+        <input type="text" id="search" class="form-control" placeholder="Rechercher un film...">
+        <div class="input-group-append">
+            <button class="btn btn-primary" id="searchbtn" type="button">Rechercher</button>
+        </div>
+
+    </div>
+    <div id="searchresults" class="row"></div>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+
+        $(document).ready(function () { // ma fontion s'exécute quand le document  est prêt
+
+            $("#searchbtn").click(function () { // fonction bouton chercher et cliqué
+
+                var query = $("#search").val(); // recupère la valeur du champs
+                var keys = "f33cd318f5135dba306176c13104506a"; // la cléf api ou il y a les films
+                var url = `https://api.themoviedb.org/3/search/movie?api_key=${keys}&query=${query}`; // construction du liens
+
+                $.getJSON(url, function (data) { // metod get json sur la cléf
+
+                    displaysearchresults(data.results); // appelle le resultats de recherche
+                });
+            });
+
+            function displaysearchresults(results) { // puis l'affiche
+
+                var searchediv = $("#searchresults"); // selectionne id de lélément puis la stock dans la variable
+                searchediv.empty(); // vide le contenue de lélément
+
+                results.forEach(function (movie) { // construit une carte pour chaque film
+
+                    var moviecard = `
+                        <div class="col-md-4">
+                            <div class="card mb-4">
+                                <img src="http://image.tmdb.org/t/p/w185/${movie.poster_path}" class="card-img-top" alt="${movie.title}">
+                                <div class="card-body">
+                                    <h5 class="card-title">${movie.title}</h5>
+                                    <p class="card-text">Date de sortie : ${movie.release_date}</p>
+                                    <p class="card-text">Note des utilisateurs : ${movie.vote_average}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    searchediv.append(moviecard); // ajoute le carte du film a lélément
+
+                });
+            }
+        });
+
+    </script>
+
+</body>
+</html>

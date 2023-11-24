@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appeller un dossier json</title>
+    <link rel="stylesheet" href="asset/css/style.css">
+</head>
+
+<body>
+
+    <select id="select1">
+
+        <option value="">Sélectionnez une région</option>
+
+    </select>
+
+    <select id="select2"></select>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="asset/json/json.json"></script>
+
+    <script>
+
+        $(document).ready(function () { // ma fonction 
+
+            var select1 = $("#select1"); // variable select1
+            var select2 = $("#select2"); // variable select2
+            var departements; // variable departement pas encore de valeur
+
+            $.getJSON("asset/json/json.json", function (data) { // envoyer le dossier json par la method get + fonction 
+
+                departements = data.departements; // extrait la valeur data et l'assigne a departement
+
+                $.each(data.regions, function (key, value) { // parcour les élément associe a la clés region dans l'objet data
+                    select1.append('<option value="' + value.reg_id + '">' + value.reg_v_nom + '</option>'); // ajoute des option a lélément select1 valeur et nom
+                });
+
+            });
+
+            select1.change(function () { // ma fonction s'excecute quand la valeur change 
+
+                var selectRegion = select1.val(); // Obtient la valeur actuellement sélectionnée dans select1
+
+                if (selectRegion) { // Vérifie si une région est sélectionnée et si la valeur n'est pas vide
+
+                    select2.show(); // affiche select2
+                    select2.empty(); // vide le contenue 
+
+                    var regionDep = departements.filter(function (dep) { // flitre les departement qui appartient a la region selectionnée
+                        return dep.dep_reg_id == selectRegion;
+                    });
+
+                    $.each(regionDep, function (key, value) { // parcour les departement filtrés
+                        select2.append('<option value="' + value.dep_id + '">' + value.dep_nom + '</option>'); // ajoute des options valeur et nom
+                    });
+
+                } else { // sinon
+
+                    select2.hide(); // masque select 2
+                }
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>
