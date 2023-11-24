@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="alternate" href="atom.xml" type="application/atom+xml" title="Atom">
+    <link rel="stylesheet" href="style.css">
+    <title>Categorie</title>
+    <style>
+        body {
+            background-image: url("asset/images_the_district/fondecran.png");
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <header class="col-12 d-flex justify-content-between">
+            <div class="col-4 col-md-2 mt-2 ">
+                <img src="asset/images_the_district/the_district_brand/linkedin_banner_image_1.png"
+                    class="img-fluid mb-1 logo" alt="the district logo">
+            </div>
+            <nav class="navbar navbar-expand-sm navbar-light col-md-9 ml-auto ">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse " id="collapsibleNavbar">
+                    <ul class="navbar-nav ">
+                        <li class="nav-item ">
+                            <a class="nav-link active " aria-current="page" href="index.html">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="categorie.html">Categorie</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="platscat.html">Plats</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="contact.html">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div>
+            <img src="asset/images_the_district/borderau.png" class="img-fluid col-12 px-0 m-0" alt="image de tete">
+        </div>
+        <div class="d-flex justify-content-center">
+            <h3>Nom de la categorie</h3>
+        </div>
+        <div class="d-lg-block">
+            <div class="d-flex justify-content-center mb-3">
+                <div class="w-75">
+                    <div class="row col-12" id="divplat"></div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-around ">
+                <a href="categorie.html" class="btn btn-secondary btn-sm zoom">Précédent</a>
+                <a href="toutlesplats.html" class="btn btn-secondary btn-sm zoom">Suivant</a>
+            </div>
+        </div>
+        <div class="d-md-none mx-auto">
+            <div class="d-flex justify-content-center w-100">
+                <div class="col-12">
+                    <div class="row col-" id="divplat"></div>
+                </div>
+            </div>
+            <div class="d-none d-flex justify-content-around ">
+                <a href="categorie.html" class="btn btn-secondary btn-sm">Précédent</a>
+                <a href="toutlesplats.html" class="btn btn-secondary btn-sm">Suivant</a>
+            </div>
+        </div>
+        <footer class="col-12">
+            <div class="d-flex justify-content-center">
+                <img class="col-1" src="asset/images_the_district/instagram.png" alt="logo instagram">
+                <img class="col-1" src="asset/images_the_district/facebook.png" alt="logo facebook">
+                <img class="col-1" src="asset/images_the_district/youtube.png" alt="logo youtube">
+            </div>
+        </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.getJSON('asset/json/json.json', function (data) {
+                var plat = data.plat;
+                var divplat = $('#divplat');
+                for (i = 0; i < plat.length; i++) {
+                    var plt = plat[i];
+                    var card = `<div class="col-12 col-lg-2 mb-2">
+                         <div class="card zoom w-100 h-100 my-1 mx-2" >
+                            <img src="asset/images_the_district/food/${plt.image}" class="card-img-top img-fluid card-img" alt="${plt.libelle}">
+                             <div class="card-body">
+                                 <p class="card-text">${plt.libelle}</p>
+                             </div>
+                         </div></div>`;
+                    divplat.append(card);
+                };
+            });
+        });
+    </script>
+</body>
+</html>
